@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { render } from "react-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+import NavBar from './BootstrapNavBar';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+/*const Home = () => <div className="App">Home</div>;
+const About = () => <div className="App">About</div>;
+const Users = ({ match }) => <div className="App">{match.url}</div>;
 
-export default App;
+const App = () => (
+  <BrowserRouter>
+    <ul className="App1">
+      <li>
+        <Link to="/">ToDo's</Link>
+      </li>
+      <li>
+        <Link to="/about">About</Link>
+      </li>
+      <li>
+        <Link to="/users">Contact</Link>{" "}
+      </li>
+    </ul>
+    <hr />
+    <Route exact path="/" component={Home} />
+    <Route path="/about" component={About} />
+    <Route path="/users" component={Users} />
+  </BrowserRouter>
+);
+
+export default App;*/
