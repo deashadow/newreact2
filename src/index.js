@@ -5,15 +5,17 @@ import "bootstrap/dist/css/bootstrap.css";
 /*import App from "./App";*/
 import * as serviceWorker from "./serviceWorker";
 import ToDo from "./ToDo";
-import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
 import BootstrapNavBar from './BootstrapNavBar'
 import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 ReactDOM.render(
   <Router>
-    <ToDo />, <BootstrapNavBar/>, <AboutUs/>, <ContactUs/>,
+    
+    <ToDo/>, 
   </Router>,
   document.getElementById("root")
 );

@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import NavBar from './BootstrapNavBar';
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
 /*const Home = () => <div className="App">Home</div>;
 const About = () => <div className="App">About</div>;

@@ -59,8 +59,30 @@ ol li {
   color: rgb(218, 18, 151);
 }
 
+.App-header2 {
+  text-align: center;
+  background-color: #293d64;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(218, 18, 151);
+}
+
 .App-link {
   color: #61dafb;
+}
+
+#businesslogo {
+  width: 140px;
+  height: auto;
+}
+
+.page-footer {
+  background-image: url(https://images-na.ssl-images-amazon.com/images/I/91Gtiq4odvL._SL1500_.jpg)
+  
 }
 
 @keyframes App-logo-spin {
