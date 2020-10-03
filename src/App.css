@@ -19,6 +19,18 @@
   justify-content: left;
 }
 
+.AppAbout {
+  margin-top: 300px;
+  background-color: #464e5e;
+  min-height: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(218, 18, 151);
+}
+
 ol li {
   display: inline-flexbox;
   text-align: left;
@@ -34,11 +46,14 @@ ol li {
   display: inline-table;
 }
 
-
+#blogo {
+  justify-content: center;
+  align-items: center;
+}
 
 
 .App-logo {
-  height: 15vmin;
+  height: 5vmin;
   pointer-events: none;
 }
 
@@ -50,7 +65,7 @@ ol li {
 
 .App-header {
   background-color: #293d64;
-  min-height: 100vh;
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +74,19 @@ ol li {
   color: rgb(218, 18, 151);
 }
 
+.App-header1 {
+  background-color: #293d64;
+  align-items: center;
+  justify-content: center;
+  
+  color: rgb(28, 238, 245);
+}
+
+
+
 .App-header2 {
+  margin-top: 140px;
+  margin-bottom: auto;
   text-align: center;
   background-color: #293d64;
   min-height: 100vh;
@@ -76,7 +103,7 @@ ol li {
 }
 
 #businesslogo {
-  width: 140px;
+  width: 75px;
   height: auto;
 }
 
@@ -84,6 +111,7 @@ ol li {
   background-image: url(https://images-na.ssl-images-amazon.com/images/I/91Gtiq4odvL._SL1500_.jpg)
   
 }
+
 
 @keyframes App-logo-spin {
   from {

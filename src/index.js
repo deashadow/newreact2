@@ -2,21 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
-/*import App from "./App";*/
 import * as serviceWorker from "./serviceWorker";
 import ToDo from "./ToDo";
-import ContactUs from './ContactUs';
-import BootstrapNavBar from './BootstrapNavBar'
-import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {Link} from 'react-router-dom';
-import axios from 'axios';
+import App from "./App"
 
 ReactDOM.render(
-  <Router>
-    
-    <ToDo/>, <ContactUs/>,
-  </Router>,
+  <React.StrictMode>
+    <App />,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
