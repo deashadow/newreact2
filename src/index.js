@@ -15,7 +15,7 @@ import axios from 'axios';
 ReactDOM.render(
   <Router>
     
-    <ToDo/>, 
+    <ToDo/>, <ContactUs/>,
   </Router>,
   document.getElementById("root")
 );
