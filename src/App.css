@@ -107,6 +107,11 @@ ol li {
   height: auto;
 }
 
+#message {
+  background-color: #ecfb61;
+}
+
+
 .page-footer {
   background-image: url(https://images-na.ssl-images-amazon.com/images/I/91Gtiq4odvL._SL1500_.jpg)
   
