@@ -44,6 +44,7 @@ ol li {
 
 #check {
   display: inline-table;
+  text-decoration: line-through;
 }
 
 #blogo {
@@ -117,6 +118,11 @@ ol li {
   
 }
 
+
+::-webkit-input-placeholder {
+  color: blue;
+  font-weight: bold;
+}
 
 @keyframes App-logo-spin {
   from {

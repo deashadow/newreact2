@@ -3,12 +3,29 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as serviceWorker from "./serviceWorker";
-import ToDo from "./ToDo";
 import App from "./App"
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import allReducers from './reducers';
+
+
+// store
+/*const store = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);*/
+/*
+store.subscribe( () => console.log('counter='+store.getState()));
+store.dispatch( incr())
+store.dispatch( incr())
+store.dispatch( incr())
+store.dispatch( decr())*/
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />,
+
+    <App /*store={store}*//>
+    
   </React.StrictMode>,
   document.getElementById("root")
 );
