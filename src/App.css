@@ -108,6 +108,10 @@ ol li {
   height: auto;
 }
 
+#Sanibel {
+  max-width: 65%;
+}
+
 #message {
   background-color: #ecfb61;
 }
@@ -122,6 +126,7 @@ ol li {
 ::-webkit-input-placeholder {
   color: blue;
   font-weight: bold;
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
