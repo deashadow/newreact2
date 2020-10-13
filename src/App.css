@@ -116,6 +116,12 @@ ol li {
   background-color: #ecfb61;
 }
 
+#uuidv4 {
+  width: 100px;
+  height: 20px;
+  background-color: #ecfb61;
+}
+
 
 .page-footer {
   background-image: url(https://images-na.ssl-images-amazon.com/images/I/91Gtiq4odvL._SL1500_.jpg)

@@ -5,7 +5,6 @@ import ToDo from "./ToDo";
 import ContactUs from "./ContactUs";
 import AboutUs from "./AboutUs";
 import NavB from "./NavB";
-import { uuid } from "uuidv4";
 import { BrowserRouter, Route, Switch, Prompt } from "react-router-dom";
 import loggedreducer from './reducers/islogged';
 import counterReducer from './reducers/counter';

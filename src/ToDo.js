@@ -3,7 +3,8 @@ import logo from "./logo.svg";
 import businessLogo from "./businessLogo.jpg";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
-import { uuidv4 } from "uuidv4";
+//import { uuid, uuidv4 } from "uuidv4";
+import uuid from "uuid";
 import React, { Component } from "react";
 
 class ToDo extends Component {
@@ -14,8 +15,8 @@ class ToDo extends Component {
       text: "",
       inputVal: "",
       completed: {},
-      //id: uuidv4,
-    }
+      id: uuid(),
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -31,7 +32,8 @@ class ToDo extends Component {
     this.setState((prevState) => ({
       list: prevState.list.concat(this.state.text),
       text: "",
-    }))
+      id: uuid(),
+    }));
   }
 
   handleChange(e) {
@@ -75,13 +77,18 @@ class ToDo extends Component {
             <h1>
               <u>**TO DO LIST**</u>
             </h1>
+            
             <form onSubmit={this.handleSubmit}>
               <input
                 placeholder="enter your task"
                 value={this.state.text}
                 onChange={(e) => this.handleChange(e)}
               />
-              <button type="button" onClick={this.handleSubmit} className="btn btn-primary btn-lg m-3">
+              <button
+                type="button"
+                onClick={this.handleSubmit}
+                className="btn btn-primary btn-lg m-3"
+              >
                 Add item
               </button>
               <ol>
@@ -93,7 +100,9 @@ class ToDo extends Component {
                           ? "line-through"
                           : "",
                       }}
-                      key={index}>{item}
+                      key={index}
+                    >
+                      {item}
                       <button
                         id="delete"
                         type="button"
@@ -107,6 +116,12 @@ class ToDo extends Component {
                         type="checkbox"
                         name="TaskCompleted"
                         onChange={(e) => this.itemChecked(index)}
+                      />
+                      <input id="uuidv4"
+                      className="m-3"
+                      type="input"
+                      name="uuidv4"
+                      value={uuid.v4()}
                       />
                       {""}
                     </li>
