@@ -16,6 +16,7 @@ class ToDo extends Component {
       inputVal: "",
       completed: {},
       id: uuid(),
+      hidden: true,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,6 +26,7 @@ class ToDo extends Component {
     this.onClick = this.onClick.bind(this);
     this.inComplete = this.inComplete.bind(this);
     this.itemChecked = this.itemChecked.bind(this);
+    this.handleUuid = this.handleUuid.bind(this);
   }
 
   handleSubmit(e) {
@@ -61,11 +63,19 @@ class ToDo extends Component {
     alert("No are not done yet!!  You have more tasks to Complete!!");
   };
 
-  itemChecked(index, e) {
+  itemChecked(index, uuid) {
     //alert("Task Complete");
     this.setState((state) => ({
       completed: { ...state.completed, [index]: !state.completed[index] },
     }));
+  }
+
+  handleUuid () {
+        const id = this.state.id;
+        //uuid.splice(uuid, 1);
+        this.setState({
+        hidden: !this.state.hidden
+    })
   }
 
   render() {
@@ -100,7 +110,7 @@ class ToDo extends Component {
                           ? "line-through"
                           : "",
                       }}
-                      key={index}
+                      key={ index, uuid}
                     >
                       {item}
                       <button
@@ -112,14 +122,17 @@ class ToDo extends Component {
                         Delete
                       </button>
                       <input
+                        
                         id="check"
-                        type="checkbox"
+                        type="checkbox" 
                         name="TaskCompleted"
-                        onChange={(e) => this.itemChecked(index)}
+                        onChange={(e) => this.itemChecked(index, uuid)}
                       />
                       <input id="uuidv4"
+                      hidden={!this.state.hidden ? true : false}
+                      onClick= {(e) => this.handleUuid(uuid, 1)}
                       className="m-3"
-                      type="input"
+                      type="value"
                       name="uuidv4"
                       value={uuid.v4()}
                       />

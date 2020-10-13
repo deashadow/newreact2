@@ -117,11 +117,93 @@ ol li {
 }
 
 #uuidv4 {
-  width: 100px;
-  height: 20px;
-  background-color: #ecfb61;
+  width: 150px;
+  height: 25px;
+  background-color: #444b04;
+  text-shadow: #61dafb;
+  color: rgb(87, 117, 117);
+  /*animation: fadeIn ease 10s;
+  -webkit-animation: fadeIn ease 10s;
+  -moz-animation: fadeIn ease 10s;
+  -o-animation: fadeIn ease 10s;
+  -ms-animation: fadeIn ease 10s;*/
+  animation: fadeOut ease 15s;
+  -webkit-animation: fadeOut ease 15s;
+  -moz-animation: fadeOut ease 15s;
+  -o-animation: fadeOut ease 15s;
+  -ms-animation: fadeOut ease 15s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 }
 
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
 
 .page-footer {
   background-image: url(https://images-na.ssl-images-amazon.com/images/I/91Gtiq4odvL._SL1500_.jpg)
