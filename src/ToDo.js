@@ -1,82 +1,86 @@
-/*import React from 'react';*/
 import logo from "./logo.svg";
 import businessLogo from "./businessLogo.jpg";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
-//import { uuid, uuidv4 } from "uuidv4";
-import uuid from "uuid";
-import React, { Component } from "react";
+import { uuid } from "uuidv4";
+import React, { Component, createRef } from "react";
 
 class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [],
-      text: "",
+      tasks: [],
+      selectedFilter: "all",
       inputVal: "",
-      completed: {},
-      id: uuid(),
-      hidden: true,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-    this.inputChange = this.inputChange.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.inComplete = this.inComplete.bind(this);
-    this.itemChecked = this.itemChecked.bind(this);
-    this.handleUuid = this.handleUuid.bind(this);
+    this.taskRef = createRef();
+    this.handleSubmit = () => {
+      console.log("handleSubmit called");
+      let task = this.taskRef.current.value;
+      this.setState({
+        tasks: [...this.state.tasks, { id: uuid(), task: task, done: false }] })
+      }
+    
+    this.removeItem = () => {
+      let copyTasks = Object.assign([], this.state.tasks);
+      copyTasks.splice(uuid, 1);
+      this.setState({ tasks: copyTasks })
+    }
+
+    /*this.inputChange = (e) => {
+      //console.log
+      this.setState({ inputVal: e.task.value });
+    };*/
+
+    this.handleLinethru = (id) => {
+       // let doneTask = this.task.task
+      //let task=this.state.tasks.find((task) => {return task.id === id })
+      let newTasks = [...this.state.tasks];
+      let task = newTasks.find((task) => task.id === id);
+
+      if (task.done === true) {
+        task.done = false;
+        //alert("help")
+        //this.task = this.task.className.add ('Line')
+      } else {
+        task.done = true;
+        //this.task = this.task.className.remove ('Line')
+      }
+      this.setState({ tasks: [...newTasks] })
+    }
+    this.getFilteredTasks = () => {
+      if (this.state.selectedFilter === "all") {
+        return this.state.tasks;
+      } else if (this.state.selectedFilter === "p") {
+        const completed = this.state.tasks.filter(function (task) {
+          if (task.done) {
+            return false;
+          } else {
+            return true;
+          }
+        })
+        return completed;
+      } else if (this.state.selectedFilter === "d") {
+        const completed = this.state.tasks.filter(function (task) {
+          if (task.done) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        return completed;
+      }
+    };
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.setState((prevState) => ({
-      list: prevState.list.concat(this.state.text),
-      text: "",
-      id: uuid(),
-    }));
-  }
-
-  handleChange(e) {
-    this.setState({
-      text: e.target.value,
+  componentDidUpdate() {
+    this.state.tasks.forEach((task) => {
+      console.log(JSON.stringify(task));
     });
   }
 
-  removeItem(index) {
-    const list = this.state.list;
-    list.splice(index, 1);
-    this.setState({ list });
-  }
-
-  inputChange = (e) => {
-    //console.log
-    this.setState({ inputVal: e.target.value });
-  };
-
-  onClick = (e) => {
-    alert("Great Job!! You are all Done--- Nap Time!!!");
-  };
-
-  inComplete = (e) => {
-    alert("No are not done yet!!  You have more tasks to Complete!!");
-  };
-
-  itemChecked(index, uuid) {
-    //alert("Task Complete");
-    this.setState((state) => ({
-      completed: { ...state.completed, [index]: !state.completed[index] },
-    }));
-  }
-
-  handleUuid () {
-        const id = this.state.id;
-        //uuid.splice(uuid, 1);
-        this.setState({
-        hidden: !this.state.hidden
-    })
-  }
+  
 
   render() {
     return (
@@ -87,59 +91,76 @@ class ToDo extends Component {
             <h1>
               <u>**TO DO LIST**</u>
             </h1>
-            
+
             <form onSubmit={this.handleSubmit}>
               <input
+                type="search"
+                ref={this.taskRef}
                 placeholder="enter your task"
-                value={this.state.text}
-                onChange={(e) => this.handleChange(e)}
+                /* value={this.state.text}
+                onChange={(e) => this.handleChange(e)}*/
               />
               <button
                 type="button"
                 onClick={this.handleSubmit}
                 className="btn btn-primary btn-lg m-3"
               >
-                Add item
+                Add task
               </button>
               <ol>
-                {this.state.list.map((item, index) => {
-                  return (
-                    <li
-                      style={{
-                        textDecoration: this.state.completed[index]
-                          ? "line-through"
-                          : "",
-                      }}
-                      key={ index, uuid}
-                    >
-                      {item}
-                      <button
-                        id="delete"
-                        type="button"
-                        className="btn btn-danger btn-sm m-3"
-                        onClick={() => this.removeItem(index)}
-                      >
-                        Delete
-                      </button>
-                      <input
-                        
-                        id="check"
-                        type="checkbox" 
-                        name="TaskCompleted"
-                        onChange={(e) => this.itemChecked(index, uuid)}
-                      />
-                      <input id="uuidv4"
-                      hidden={!this.state.hidden ? true : false}
-                      onClick= {(e) => this.handleUuid(uuid, 1)}
-                      className="m-3"
-                      type="value"
-                      name="uuidv4"
-                      value={uuid.v4()}
-                      />
-                      {""}
-                    </li>
-                  );
+                 {this.getFilteredTasks().map((task, id) => {
+                  if (task.done === true) {
+                    console.log(task.id + " is true");
+                    return (
+                      <li>
+                        <div
+                          key={task.id}
+                          style={{ "textDecoration": "line-through" }}
+                        >
+                          {task.task}
+                        </div>
+                        <button type="button" className="btn btn-danger btn-sm m-3"
+                        onClick={this.removeItem}>
+                          Delete Task
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-success btn-sm m-3"
+                          onClick={() => {
+                            this.handleLinethru(task.id);
+                          }}
+                        >
+                          Task Done!!
+                        </button>
+                      </li>
+                    )
+                  
+                 }
+                  
+                   else {
+                    console.log(task.id + " is false");
+                    return (
+                      <li>
+                        <div key={task.id}>{task.task}</div>
+                        <button type="button" className="btn btn-danger btn-sm m-3" 
+                        onClick={this.removeItem}>
+                          Delete
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-success btn-sm m-3"
+                          onClick={() => {
+                            this.handleLinethru(task.id);
+                          }}
+                        >
+                          Complete??
+                        </button>
+                        </li>
+                      
+                    );
+                  }
                 })}
+                
               </ol>
             </form>
           </header>
@@ -163,34 +184,32 @@ class ToDo extends Component {
 
                 <hr className="clearfix w-100 d-md-none pb-3"></hr>
                 <div className="col-md-3 mb-md-0 mb-3">
-                  <h5 className="text-uppercase">
-                    <ul>Total Tasks</ul>
-                  </h5>
-                  <ul className="list-unstyled">
-                    <li>
-                      <form>
-                        <input
-                          value={this.state.list.length}
-                          onChange={(e) => this.inputChange(e)}
-                          type="number"
-                          name="Task Count"
-                          id="task count"
-                          placeholder="Task Count"
-                        />
-                      </form>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="col-md-3 mb-md-0 mb-3">
                   <h5 className="text-uppercase"></h5>
                   <ul className="list-unstyled">
                     <li>
                       <button
                         id="Completed tasks"
                         type="button"
-                        className="btn btn-primary btn-lg"
-                        onClick={(e) => this.onClick(e)}
+                        className="btn btn-primary btn-md"
+                        onClick={() => this.setState({...this.state, selectedFilter: "all"}) }
+                      >
+                        All ToDo's
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="col-md-3 mb-md-0 mb-1">
+                  <h5 className="text-uppercase"></h5>
+                  <ul className="list-unstyled">
+                    <li>
+                      <button
+                        id="Completed tasks"
+                        type="button"
+                        className="btn btn-primary btn-md"
+                        onClick={() =>
+                          this.setState({ ...this.state, selectedFilter: "d" })
+                        }
                       >
                         Completed ToDo's
                       </button>
@@ -198,21 +217,25 @@ class ToDo extends Component {
                   </ul>
                 </div>
 
-                <div className="col-md-3 mb-md-0 mb-3">
+                <div className="col-md-3 mb-md-0 mb-1">
                   <h5 className="text-uppercase"></h5>
                   <ul className="list-unstyled">
                     <li>
                       <button
                         id="Incomplete tasks"
                         type="button"
-                        className="btn btn-primary btn-lg"
-                        onClick={(e) => this.inComplete(e)}
+                        className="btn btn-primary btn-md"
+                        onClick={() =>
+                          this.setState({ ...this.state, selectedFilter: "p" })
+                        }
                       >
                         Incomplete ToDo's
                       </button>
                     </li>
                   </ul>
                 </div>
+
+                
               </div>
               <div className="footer-copyright text-center py-3">
                 © 2020 Copyright: RR <br></br>

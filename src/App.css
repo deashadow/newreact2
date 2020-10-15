@@ -114,6 +114,20 @@ ol li {
 
 #message {
   background-color: #ecfb61;
+  }
+
+ol li {
+  list-style-type: upper-roman;
+  list-style-position: inside;
+  background: #61dafb;
+  margin: 20px;
+  padding: 5px;
+  display: inline-block;
+  text-align: center;
+}
+
+ol li:hover {
+  color: rgb(19, 1, 2);
 }
 
 #uuidv4 {
