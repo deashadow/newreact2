@@ -3,12 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import * as serviceWorker from "./serviceWorker";
-import App from "./App"
-import {createStore} from 'redux';
-import {Provider, connect} from 'react-redux';
-import allReducers from './reducers';
-import todoCart from './todoCart';
-
+import App from "./App";
+import { createStore } from "redux";
+import { Provider, connect } from "react-redux";
+import allReducers from "./reducers";
+import todoCart from "./todoCart";
 
 // store
 const store = createStore(

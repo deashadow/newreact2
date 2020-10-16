@@ -7,26 +7,35 @@ import React, { Component, createRef } from "react";
 
 class ToDo extends Component {
   constructor(props) {
+    /*establishing state properties*/
     super(props);
     this.state = {
-      tasks: [],
-      selectedFilter: "all",
+      tasks: [] /*establishing empty array*/,
+      selectedFilter: "all" /*establishes initial filter state*/,
       inputVal: "",
     };
 
-    this.taskRef = createRef();
+    this.taskRef = createRef(); /*submit button used to add new elements (tasks) into array*/
     this.handleSubmit = () => {
       console.log("handleSubmit called");
       let task = this.taskRef.current.value;
       this.setState({
-        tasks: [...this.state.tasks, { id: uuid(), task: task, done: false }] })
-      }
-    
-    this.removeItem = () => {
-      let copyTasks = Object.assign([], this.state.tasks);
-      copyTasks.splice(uuid, 1);
-      this.setState({ tasks: copyTasks })
-    }
+        tasks: [
+          ...this.state.tasks,
+          { id: uuid(), task: task, done: false },
+        ] /*use of spread operator to ad new element (tasks) to array*/,
+      });
+    };
+
+    this.removeItem = (taskid) => {
+      // let copyTasks = Object.assign([], this.state.tasks);
+      // copyTasks.splice(uuid, 1);  splice not necessary if using filter
+      this.setState({
+        tasks: this.state.tasks.filter((task) => {
+          return taskid !== task.id;
+        }),
+      });
+    };
 
     /*this.inputChange = (e) => {
       //console.log
@@ -34,8 +43,8 @@ class ToDo extends Component {
     };*/
 
     this.handleLinethru = (id) => {
-       // let doneTask = this.task.task
-      //let task=this.state.tasks.find((task) => {return task.id === id })
+      // let doneTask = this.task.task
+      //let task=this.state.tasks.find((task) => {return task.id === id })---identifies current task bu id to determine strikethru
       let newTasks = [...this.state.tasks];
       let task = newTasks.find((task) => task.id === id);
 
@@ -47,8 +56,8 @@ class ToDo extends Component {
         task.done = true;
         //this.task = this.task.className.remove ('Line')
       }
-      this.setState({ tasks: [...newTasks] })
-    }
+      this.setState({ tasks: [...newTasks] });
+    };
     this.getFilteredTasks = () => {
       if (this.state.selectedFilter === "all") {
         return this.state.tasks;
@@ -59,7 +68,7 @@ class ToDo extends Component {
           } else {
             return true;
           }
-        })
+        });
         return completed;
       } else if (this.state.selectedFilter === "d") {
         const completed = this.state.tasks.filter(function (task) {
@@ -79,8 +88,6 @@ class ToDo extends Component {
       console.log(JSON.stringify(task));
     });
   }
-
-  
 
   render() {
     return (
@@ -108,19 +115,24 @@ class ToDo extends Component {
                 Add task
               </button>
               <ol>
-                 {this.getFilteredTasks().map((task, id) => {
+                {this.getFilteredTasks().map((task, id) => {
                   if (task.done === true) {
                     console.log(task.id + " is true");
                     return (
                       <li>
                         <div
                           key={task.id}
-                          style={{ "textDecoration": "line-through" }}
+                          style={{ textDecoration: "line-through" }}
                         >
                           {task.task}
                         </div>
-                        <button type="button" className="btn btn-danger btn-sm m-3"
-                        onClick={this.removeItem}>
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm m-3"
+                          onClick={() => {
+                            this.removeItem(task.id);
+                          }}
+                        >
                           Delete Task
                         </button>
                         <button
@@ -133,17 +145,19 @@ class ToDo extends Component {
                           Task Done!!
                         </button>
                       </li>
-                    )
-                  
-                 }
-                  
-                   else {
+                    );
+                  } else {
                     console.log(task.id + " is false");
                     return (
                       <li>
                         <div key={task.id}>{task.task}</div>
-                        <button type="button" className="btn btn-danger btn-sm m-3" 
-                        onClick={this.removeItem}>
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm m-3"
+                          onClick={() => {
+                            this.removeItem(task.id);
+                          }} /*this deletes the selected task via id*/
+                        >
                           Delete
                         </button>
                         <button
@@ -155,12 +169,10 @@ class ToDo extends Component {
                         >
                           Complete??
                         </button>
-                        </li>
-                      
+                      </li>
                     );
                   }
                 })}
-                
               </ol>
             </form>
           </header>
@@ -191,7 +203,12 @@ class ToDo extends Component {
                         id="Completed tasks"
                         type="button"
                         className="btn btn-primary btn-md"
-                        onClick={() => this.setState({...this.state, selectedFilter: "all"}) }
+                        onClick={() =>
+                          this.setState({
+                            ...this.state,
+                            selectedFilter: "all",
+                          })
+                        }
                       >
                         All ToDo's
                       </button>
@@ -206,7 +223,7 @@ class ToDo extends Component {
                       <button
                         id="Completed tasks"
                         type="button"
-                        className="btn btn-primary btn-md"
+                        className="btn btn-success btn-md"
                         onClick={() =>
                           this.setState({ ...this.state, selectedFilter: "d" })
                         }
@@ -224,7 +241,7 @@ class ToDo extends Component {
                       <button
                         id="Incomplete tasks"
                         type="button"
-                        className="btn btn-primary btn-md"
+                        className="btn btn-warning btn-md"
                         onClick={() =>
                           this.setState({ ...this.state, selectedFilter: "p" })
                         }
@@ -234,8 +251,6 @@ class ToDo extends Component {
                     </li>
                   </ul>
                 </div>
-
-                
               </div>
               <div className="footer-copyright text-center py-3">
                 © 2020 Copyright: RR <br></br>

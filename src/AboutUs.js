@@ -4,26 +4,26 @@ import "./App.css";
 import logo from "./logo.svg";
 import Sanibel from "./Sanibel.jpg";
 
-
 class AboutUs extends Component {
   render() {
     return (
       <div>
         <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div className="container-sm">
-        <img className= "Sanibelpic"
-                      id="Sanibel"
-                      src={Sanibel}
-                      alt="island pic"
-                    />
+          <img src={logo} className="App-logo" alt="logo" />
+          <div className="container-sm">
+            <img
+              className="Sanibelpic"
+              id="Sanibel"
+              src={Sanibel}
+              alt="island pic"
+            />
           </div>
           <p> Hello!! We are Learning how to do this!!</p>
         </div>
-        
+
         <div></div>
         <h5>
-          <strong>Ronald Rendessy</strong>
+          <strong>Ronald Rendessy, Realtor, MBA</strong>
         </h5>
         <h4>Full Stack Web Developer</h4>
         <div>
