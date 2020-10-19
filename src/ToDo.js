@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import { uuid } from "uuidv4";
 import React, { Component, createRef } from "react";
-import {useSelector, useDispatch} from 'react-redux';
+import { connect } from 'react-redux';
 import { addTodo, deleteTodo, updateTodo } from './actions'
 
 
@@ -277,4 +277,15 @@ class ToDo extends Component {
   }
 }
 
-export default ToDo;
+const mapStateToProps = (state) => ({
+  todos: state.todos
+ });
+ const mapDispatchToProps = {
+  addTodo,
+  deleteTodo,
+  updateTodo
+ }
+ export default connect(mapStateToProps,
+  mapDispatchToProps)(ToDo); 
+
+//export default ToDo;
