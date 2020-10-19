@@ -4,26 +4,32 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import { uuid } from "uuidv4";
 import React, { Component, createRef } from "react";
+import {useSelector, useDispatch} from 'react-redux';
+import { addTodo, deleteTodo, updateTodo } from './actions'
+
 
 class ToDo extends Component {
   constructor(props) {
     /*establishing state properties*/
-    super(props);
+    super();
+   // this.dispatch = useDispatch
     this.state = {
       tasks: [] /*establishing empty array*/,
-      selectedFilter: "all" /*establishes initial filter state*/,
-      inputVal: "",
+      selectedFilter: "All" /*establishes initial filter state*/,
+     // inputVal: "",
     };
 
     this.taskRef = createRef(); /*submit button used to add new elements (tasks) into array*/
-    this.handleSubmit = () => {
+    this.handleSubmit = (e) => {
+      e.preventDefault();
       console.log("handleSubmit called");
+      //const dispatch = useDispatch();
       let task = this.taskRef.current.value;
       this.setState({
         tasks: [
           ...this.state.tasks,
           { id: uuid(), task: task, done: false },
-        ] /*use of spread operator to ad new element (tasks) to array*/,
+        ] /*use of spread operator to ad new element (tasks) to array*/
       });
     };
 
@@ -58,10 +64,14 @@ class ToDo extends Component {
       }
       this.setState({ tasks: [...newTasks] });
     };
-    this.getFilteredTasks = () => {
-      if (this.state.selectedFilter === "all") {
+
+    this.getFilteredTasks = () => {  /*possibly look at using a ternary operator in the future to eliminate the if/else??*/
+      console.log('getFilteredTasks:'+ JSON.stringify(this.state))
+      if (this.state.selectedFilter === "All") {
+        console.log('getFilteredTasks:All:tasks='+this.state.tasks);
         return this.state.tasks;
-      } else if (this.state.selectedFilter === "p") {
+      } else if (this.state.selectedFilter === "I") {
+        console.log('getFilteredTasks:I:tasks='+this.state.tasks);
         const completed = this.state.tasks.filter(function (task) {
           if (task.done) {
             return false;
@@ -69,8 +79,10 @@ class ToDo extends Component {
             return true;
           }
         });
+        console.log('getFilteredTasks:I:completed='+completed);
         return completed;
-      } else if (this.state.selectedFilter === "d") {
+      } else if (this.state.selectedFilter === "C") {
+        console.log('getFilteredTasks:C:tasks='+this.state.tasks);
         const completed = this.state.tasks.filter(function (task) {
           if (task.done) {
             return true;
@@ -78,6 +90,7 @@ class ToDo extends Component {
             return false;
           }
         });
+        console.log('getFilteredTasks:C:completed='+completed);
         return completed;
       }
     };
@@ -206,7 +219,7 @@ class ToDo extends Component {
                         onClick={() =>
                           this.setState({
                             ...this.state,
-                            selectedFilter: "all",
+                            selectedFilter: "All",
                           })
                         }
                       >
@@ -225,7 +238,7 @@ class ToDo extends Component {
                         type="button"
                         className="btn btn-success btn-md"
                         onClick={() =>
-                          this.setState({ ...this.state, selectedFilter: "d" })
+                          this.setState({ ...this.state, selectedFilter: "C" })
                         }
                       >
                         Completed ToDo's
@@ -243,7 +256,7 @@ class ToDo extends Component {
                         type="button"
                         className="btn btn-warning btn-md"
                         onClick={() =>
-                          this.setState({ ...this.state, selectedFilter: "p" })
+                          this.setState({ ...this.state, selectedFilter: "I" })
                         }
                       >
                         Incomplete ToDo's

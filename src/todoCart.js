@@ -2,7 +2,7 @@
 import {incr, decr, signIn} from './actions';
 import {Provider, connect} from 'react-redux';
 
-function todoCart(props) {
+function todoCart() {
   const counter = useSelector( state => state.counter)
   const islogged = useSelector( state => state.islogged)
   const dispatch = useDispatch();

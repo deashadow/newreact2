@@ -1,13 +1,11 @@
 // action
-export const incr = () => {
-    return { 'type' : 'INCREMENT'}
+export const addTodo = (todo) => {
+    return { 'type' : 'ADD_TODO', 'todo': todo}
 }
-export const decr = () => {
-    return { 'type' : 'DECREMENT'}
+export const deleteTodo = (todo) => {
+    return { 'type' : 'DELETE_TODO', 'todo': todo}
 }
-export const signIn = () => {
-    return { 'type' : 'SIGN_IN'}
-}
-export const signOut = () => {
-    return { 'type' : 'SIGN_OUT'}
-}
+export const updateTodo = (todo) => {
+    return { type: 'UPDATE_TODO', 'todo': todo}
+    }
+

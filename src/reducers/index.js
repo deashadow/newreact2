@@ -1,9 +1,7 @@
-import counterReducer from './counter';
-import loggedReducer from './islogged';
+import todosReducer from './todos';
 import {combineReducers} from 'redux';
 
 const allReducers = combineReducers( {
-    counter : counterReducer,
-    islogged : loggedReducer
-})
+    todos : todosReducer
+ })
 export default allReducers
