@@ -4,43 +4,51 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import { uuid } from "uuidv4";
 import React, { Component, createRef } from "react";
-import { connect } from 'react-redux';
-import { addTodo, deleteTodo, updateTodo } from './actions'
-
+import { connect } from "react-redux";
+import { addTodo, deleteTodo, updateTodo } from "./actions";
 
 class ToDo extends Component {
   constructor(props) {
     /*establishing state properties*/
     super();
-   // this.dispatch = useDispatch
+    // this.dispatch = useDispatch
     this.state = {
-      tasks: [] /*establishing empty array*/,
+      //tasks: [] /*establishing empty array*/,
       selectedFilter: "All" /*establishes initial filter state*/,
-     // inputVal: "",
+      // inputVal: "",
     };
 
-    this.taskRef = createRef(); /*submit button used to add new elements (tasks) into array*/
+    this.statictaskRef = createRef(); /*submit button used to add new elements (tasks) into array*/
     this.handleSubmit = (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       console.log("handleSubmit called");
       //const dispatch = useDispatch();
-      let task = this.taskRef.current.value;
-      this.setState({
-        tasks: [
-          ...this.state.tasks,
-          { id: uuid(), task: task, done: false },
-        ] /*use of spread operator to ad new element (tasks) to array*/
-      });
+      let task = this.statictaskRef.current.value;
+      let todo = { id: uuid(), task: task, done: false };
+      console.log("this.props=" + JSON.stringify(this.props));
+      this.props.addTodo(todo);
+      /*this.setState({
+        tasks: [ ...this.state.tasks, todo] //use of spread operator to ad new element (tasks) to array
+      });*/
     };
 
     this.removeItem = (taskid) => {
       // let copyTasks = Object.assign([], this.state.tasks);
       // copyTasks.splice(uuid, 1);  splice not necessary if using filter
+      console.log("removeItem: taskid=" + taskid);
+      console.log("***removeItem:LOOP");
+      this.props.todos.forEach((element, index) => {
+        console.log(index + ":" + JSON.stringify(element));
+      });
+      let todo = this.props.todos.find((todo) => todo.id === taskid);
+      console.log("removeItem: task=" + JSON.stringify(todo));
+      this.props.deleteTodo(todo);
+      /*
       this.setState({
         tasks: this.state.tasks.filter((task) => {
           return taskid !== task.id;
         }),
-      });
+      });*/
     };
 
     /*this.inputChange = (e) => {
@@ -51,9 +59,12 @@ class ToDo extends Component {
     this.handleLinethru = (id) => {
       // let doneTask = this.task.task
       //let task=this.state.tasks.find((task) => {return task.id === id })---identifies current task bu id to determine strikethru
-      let newTasks = [...this.state.tasks];
+      let newTasks = [...this.props.todos];
       let task = newTasks.find((task) => task.id === id);
-
+      console.log("before:task=" + JSON.stringify(task));
+      this.props.updateTodo(task);
+      /*
+      console.log('after1:task='+JSON.stringify(task))
       if (task.done === true) {
         task.done = false;
         //alert("help")
@@ -62,42 +73,45 @@ class ToDo extends Component {
         task.done = true;
         //this.task = this.task.className.remove ('Line')
       }
-      this.setState({ tasks: [...newTasks] });
+      console.log('after2:task='+JSON.stringify(task))
+      */
+      //this.setState({ tasks: [...newTasks] });
     };
 
-    this.getFilteredTasks = () => {  /*possibly look at using a ternary operator in the future to eliminate the if/else??*/
-      console.log('getFilteredTasks:'+ JSON.stringify(this.state))
+    this.getFilteredTasks = () => {
+      /*possibly look at using a ternary operator in the future to eliminate the if/else??*/
+      console.log("getFilteredTasks:" + JSON.stringify(this.state));
       if (this.state.selectedFilter === "All") {
-        console.log('getFilteredTasks:All:tasks='+this.state.tasks);
-        return this.state.tasks;
+        console.log("getFilteredTasks:All:tasks=" + this.props.todos);
+        return this.props.todos;
       } else if (this.state.selectedFilter === "I") {
-        console.log('getFilteredTasks:I:tasks='+this.state.tasks);
-        const completed = this.state.tasks.filter(function (task) {
+        console.log("getFilteredTasks:I:tasks=" + this.props.todos);
+        const completed = this.props.todos.filter(function (task) {
           if (task.done) {
             return false;
           } else {
             return true;
           }
         });
-        console.log('getFilteredTasks:I:completed='+completed);
+        console.log("getFilteredTasks:I:completed=" + completed);
         return completed;
       } else if (this.state.selectedFilter === "C") {
-        console.log('getFilteredTasks:C:tasks='+this.state.tasks);
-        const completed = this.state.tasks.filter(function (task) {
+        console.log("getFilteredTasks:C:tasks=" + this.props.todos);
+        const completed = this.props.todos.filter(function (task) {
           if (task.done) {
             return true;
           } else {
             return false;
           }
         });
-        console.log('getFilteredTasks:C:completed='+completed);
+        console.log("getFilteredTasks:C:completed=" + completed);
         return completed;
       }
     };
   }
 
   componentDidUpdate() {
-    this.state.tasks.forEach((task) => {
+    this.props.todos.forEach((task) => {
       console.log(JSON.stringify(task));
     });
   }
@@ -115,14 +129,16 @@ class ToDo extends Component {
             <form onSubmit={this.handleSubmit}>
               <input
                 type="search"
-                ref={this.taskRef}
+                ref={this.statictaskRef}
                 placeholder="enter your task"
                 /* value={this.state.text}
                 onChange={(e) => this.handleChange(e)}*/
               />
               <button
                 type="button"
-                onClick={this.handleSubmit}
+                onClick={() => {
+                  this.handleSubmit(this.statictaskRef);
+                }}
                 className="btn btn-primary btn-lg m-3"
               >
                 Add task
@@ -139,6 +155,7 @@ class ToDo extends Component {
                         >
                           {task.task}
                         </div>
+
                         <button
                           type="button"
                           className="btn btn-danger btn-sm m-3"
@@ -278,14 +295,13 @@ class ToDo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.todos
- });
- const mapDispatchToProps = {
+  todos: state.todos,
+});
+const mapDispatchToProps = {
   addTodo,
   deleteTodo,
-  updateTodo
- }
- export default connect(mapStateToProps,
-  mapDispatchToProps)(ToDo); 
+  updateTodo,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo);
 
 //export default ToDo;

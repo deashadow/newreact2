@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Col, FormGroup } from "reactstrap";
 import "./App.css";
 import axios from "axios";
